@@ -16,16 +16,18 @@ const store = async (name, description, data, fileName, type) => {
   return metadata;
 };
 
-const NewMeme = ({ bunzz, userAddress, showHandler }) => {
+const NewMeme = ({ handler, userAddress, showHandler }) => {
   const [blob, setBlob] = useState(null);
   const [fileName, setFileName] = useState(null);
   const [base64, setBase64] = useState(null);
   const [onGoing, setOnGoing] = useState(false);
   const [tokenId, setTokenId] = useState();
+  const [listTkId, setListTkId] = useState()
+  const [price, setPrice] = useState()
   const [type, setType] = useState(null);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const tokenIds = []
+  const marketplaceAddress = "0x5B84Bc4832432D4F03BBeB436772162f1D0DAFd7"
 
   const select = (e) => {
     const file = e.target.files[0];
@@ -61,24 +63,29 @@ const NewMeme = ({ bunzz, userAddress, showHandler }) => {
     setOnGoing(true);
     try {
       const metadata = await store(name, description, blob, fileName, type);
-      const contract = await bunzz.getContract("NFT (IPFS Mintable)");
+      const contract = await handler.getContract("NFT (IPFS Mintable)");
       const inputUrl = metadata.url.replace(/^ipfs:\/\//, "");
       const tx = await contract.safeMint(userAddress, inputUrl);
       const receipt = await tx.wait();
-      console.log(receipt);
-
       const event = receipt.events[0];
       const _tokenId = event.args[2];
+      await contract.approve("0x5B84Bc4832432D4F03BBeB436772162f1D0DAFd7", _tokenId);
       setTokenId(_tokenId);
       setBase64(null);
-      window.alert("Meme minted!");
+      window.alert("Meme minted!"); 
     } catch (err) {
       console.error(err);
-      alert("Connect Wallet!")
+      alert("Error!")
     } finally {
       setOnGoing(false);
     }
   };
+
+  const list = async () => {
+    const contract = await handler.getContract("Simple Marketplace (For NFT)");
+    const listed = await contract.list(tokenId, price)
+    console.log(listed);
+  }
 
   return (
     <div>
@@ -121,6 +128,10 @@ const NewMeme = ({ bunzz, userAddress, showHandler }) => {
         <p>Use the token Id below to query for your minted meme. And make sure you have some Goerli eth. Get some <a className="underline" href='https://goerlifaucet.com/'>here</a></p>
         {tokenId ? <p className="font-semibold text-lg py-4">Token ID: {tokenId}</p> : <></>}
 
+      </div>
+      <div>
+        <input type='text' onChange={(e) => setPrice(e.target.value)} />
+        <button onClick={list}>List</button>
       </div>
     </div>
     </div>
