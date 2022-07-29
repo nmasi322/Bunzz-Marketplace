@@ -1,7 +1,6 @@
 import React from 'react'
 
 const NftCard = ({nft}) => {
-    console.log(nft);
     let contract = nft.contract
     contract.toString()
   return (

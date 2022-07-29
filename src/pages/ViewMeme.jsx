@@ -3,6 +3,7 @@ import bunzz from "bunzz-sdk";
 import { useState, useEffect } from 'react';
 import Memes from '../components/Memes';
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const DAPP_ID = process.env.REACT_APP_DAPP_ID;
 const API_KEY = process.env.REACT_APP_API_KEY; 
@@ -32,10 +33,10 @@ const ViewMeme = () => {
         <div>
             <Navbar/>
         </div>
-        <div className='m-5 md:m-10'>
+        <div className='m-5 md:m-10 min-h-[80vh]'>
             <Memes handler={handler} />
-
         </div>
+        <Footer/>
     </div>
   )
 }

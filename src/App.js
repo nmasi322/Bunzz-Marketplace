@@ -1,9 +1,8 @@
 import React from 'react'
-import Mint from './pages/Mint'
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
-import Signup from './pages/signup'
+
 import Profile from './pages/profile'
-import NewMemePage from './pages/NewMeme'
+import NewMemePage from './pages/NewMemePage'
 import ViewMeme from './pages/ViewMeme'
 
 const App = () => {

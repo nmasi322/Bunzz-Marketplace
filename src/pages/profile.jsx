@@ -3,19 +3,20 @@ import Navbar from '../components/Navbar'
 import Bio from '../components/Bio'
 import NewMeme from '../components/NewMeme'
 import Memes from '../components/Memes'
+import Footer from '../components/Footer'
 
 
 const Profile = () => {
   return (
-    <div>
+    <div className='relative'>
         <div>
             <Navbar/>
         </div>
-        <div>
+        <div className='min-h-[80vh]'>
           <Bio/>
         </div>
-        <div>
-          {/* <Memes/> */}
+        <div className=''>
+          <Footer />
         </div>
     </div>
   )

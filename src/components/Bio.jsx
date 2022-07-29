@@ -1,11 +1,7 @@
 import Pfp from './pfp'
 import bunzz from "bunzz-sdk";
 import { useState, useEffect } from 'react';
-import PreviousMap from 'postcss/lib/previous-map';
-import NewMeme from './NewMeme';
-import Memes from './Memes';
 import NftContainer from './NftContainer';
-import { ERC721Checker } from './ERC721Checker';
 
 const DAPP_ID = process.env.REACT_APP_DAPP_ID;
 const API_KEY = process.env.REACT_APP_API_KEY;
@@ -50,7 +46,6 @@ const Bio = () => {
         const response = await fetch(`https://api.rarible.org/v0.1/items/byOwner/?owner=ETHEREUM:${userAddress}`)
         const data = await response.json()
         setNfts(data.items);
-        // console.log(nfts);
     }
 
     useEffect(() => {
@@ -65,7 +60,7 @@ const Bio = () => {
         <div className='relative'>
             <div className='p-5'>
                 {
-                    !userAddress ? <button className='rounded bg-[#592693] text-white w-40 hover:cursor-pointer' onClick={connectWallet}>Connect wallet</button> : <h1 onClick={() => { navigator.clipboard.writeText(userAddress)
+                    !userAddress ? <button className='rounded py-3 bg-[#592693] text-white w-40 hover:cursor-pointer' onClick={connectWallet}>Connect wallet</button> : <h1 onClick={() => { navigator.clipboard.writeText(userAddress)
                     alert("Wallet address copied!")
                     }} className='font-semibold hover:cursor-pointer'>{sliced}....</h1> 
                 }
